@@ -7,6 +7,10 @@ verify_ssl = true
 
 [packages]
 flask = "*"
+sympy = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+start = "flask run"
