@@ -12,30 +12,16 @@ def constructor(cls, *prototype):
         working_mem["instances"][instance_key] = inner_class(prototype)
         return working_mem["instances"][instance_key]
 
-def initializer(self, prototype):
-    print(prototype)
-
-string = """
-a = TRIANGLE("A","B","C")
-b = TRIANGLE("A","B","C")
-c = TRIANGLE("A","B","F")
-"""
-
-def session(string):
+def request_session(requestBody, kernel_globals):
     working_mem = {
         "instances": {}
     }
 
     locals()["TRIANGLE"] = type("TRIANGLE_Mixin",(object,),{
-        "TRIANGLE": type("TRIANGLE",(object,), {
-            "__init__": initializer
-        }),
+        "TRIANGLE": kernel_globals["TRIANGLE"],
         "working_mem": working_mem,
         "__new__": constructor,
     })
 
-    exec(string, globals(), locals())
-
-session(string)
-session(string)
-
+    result = exec(requestBody, globals(), locals())
+    print(globals().keys())

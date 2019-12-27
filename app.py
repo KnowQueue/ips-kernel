@@ -1,7 +1,11 @@
 from flask import Flask
 from flask import request
+from kernel.parsers.global_loader import global_loader
+from kernel.parsers.request_session import request_session
 
 app = Flask(__name__)
+kernel_globals = {}
+global_loader(kernel_globals)
 
 @app.route("/")
 def hello():
@@ -9,7 +13,16 @@ def hello():
 
 @app.route('/query', methods=['GET'])
 def query():
-    return request.get_data()
+    string = """
+a = TRIANGLE("A","B","C")
+b = TRIANGLE("A","B","C")
+c = TRIANGLE("A","B","F")
+"""
+    # import KB
+    request_session(request.get_data(), kernel_globals)
+    # exec(request.get_data())
+    # return result
+    return ""
 
 @app.route("/deploy")
 def deploy():
