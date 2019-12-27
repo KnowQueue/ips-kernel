@@ -8,7 +8,9 @@ def constructor(cls, *prototype):
     if instance_key in instances:
         return instances[instance_key]
     else:
-        instances[instance_key] = getattr(cls, cls.__name__[:(len(cls.__name__)-len("_Mixin"))])()
+        inner_class_name = cls.__name__[:(len(cls.__name__)-len("_Mixin"))]
+        inner_class = getattr(cls, inner_class_name)
+        instances[instance_key] = inner_class()
         return instances[instance_key]
 
 def initializer(self):
