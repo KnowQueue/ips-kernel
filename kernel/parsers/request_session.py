@@ -1,3 +1,17 @@
+
+import sys
+from io import StringIO
+import contextlib
+
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+
 def constructor(cls, *prototype):
     working_mem = cls.working_mem
     instance_key = cls.__name__
@@ -24,5 +38,9 @@ def request_session(requestBody, kernel_globals):
             "__new__": constructor,
         })
 
-    result = exec(requestBody, globals(), locals())
-    print(globals().keys())
+    with stdoutIO() as s:
+        try:
+            exec(requestBody, globals(), locals())
+        except:
+            print("Something wrong with the code")
+    return s.getvalue()

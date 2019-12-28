@@ -21,10 +21,9 @@ b = TRIANGLE("A","B","C")
 c = TRIANGLE("A","B","F")
 """
     # import KB
-    request_session(request.get_data(), kernel_globals)
+    return request_session(request.get_data(), kernel_globals)
     # exec(request.get_data())
     # return result
-    return ""
 
 @app.route("/deploy")
 def deploy():
