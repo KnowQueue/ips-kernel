@@ -15,11 +15,6 @@ def hello():
 
 @app.route('/query', methods=['GET'])
 def query():
-    string = """
-a = TRIANGLE("A","B","C")
-b = TRIANGLE("A","B","C")
-c = TRIANGLE("A","B","F")
-"""
     # import KB
     return request_session(request.get_data(), kernel_globals)
     # exec(request.get_data())

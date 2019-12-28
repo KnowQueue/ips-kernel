@@ -15,4 +15,4 @@ gevent = "*"
 python_version = "3.7"
 
 [scripts]
-start = "gunicorn -k gevent -w 5 app:app --reload"
+start = "gunicorn -k gevent -w 5 kernel:app --reload"
