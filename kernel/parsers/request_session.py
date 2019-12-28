@@ -1,4 +1,3 @@
-
 def constructor(cls, *prototype):
     working_mem = cls.working_mem
     instance_key = cls.__name__
@@ -17,11 +16,13 @@ def request_session(requestBody, kernel_globals):
         "instances": {}
     }
 
-    locals()["TRIANGLE"] = type("TRIANGLE_Mixin",(object,),{
-        "TRIANGLE": kernel_globals["TRIANGLE"],
-        "working_mem": working_mem,
-        "__new__": constructor,
-    })
+    for concept in kernel_globals["concepts"]:
+        data = concept.model
+        locals()[data['name']] = type(data['name']+"_Mixin",(object,),{
+            data['name']: kernel_globals["concepts"][data['name']],
+            "working_mem": working_mem,
+            "__new__": constructor,
+        })
 
     result = exec(requestBody, globals(), locals())
     print(globals().keys())

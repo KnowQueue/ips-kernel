@@ -4,7 +4,9 @@ from kernel.parsers.global_loader import global_loader
 from kernel.parsers.request_session import request_session
 
 app = Flask(__name__)
-kernel_globals = {}
+kernel_globals = {
+    "concepts": {}
+}
 global_loader(kernel_globals)
 
 @app.route("/")
