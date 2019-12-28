@@ -31,7 +31,7 @@ def request_session(requestBody, kernel_globals):
     }
 
     for concept in kernel_globals["concepts"]:
-        data = concept.model
+        data = kernel_globals["concepts"][concept].model
         locals()[data['name']] = type(data['name']+"_Mixin",(object,),{
             data['name']: kernel_globals["concepts"][data['name']],
             "working_mem": working_mem,
