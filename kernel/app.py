@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
-from kernel.parsers.global_loader import global_loader
-from kernel.parsers.request_session import request_session
+from .parsers.global_loader import global_loader
+from .parsers.request_session import request_session
 
 app = Flask(__name__)
 kernel_globals = {
