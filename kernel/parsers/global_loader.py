@@ -6,7 +6,7 @@ def initializer(self, identifier, working_mem):
     constructors = working_mem["constructors"]
     model = self.__class__.model
     if not (len(identifier) == len(model["prototype"])):
-        raise SyntaxError("{:s} must have {:d} identifiers.".format(self.__class__.__name__,len(model["prototype"])))
+        raise KeyError("{:s} must have {:d} identifiers.".format(self.__class__.__name__,len(model["prototype"])))
     prototypeIdentifierMap = {}
     for index, letter in enumerate(model["prototype"]):
         prototypeIdentifierMap[letter] = identifier[index]
@@ -36,7 +36,7 @@ def global_loader(kernel_globals=None):
             class_attrs = {
                 "model": data,
                 "__init__": initializer,
-                "__str__": to_string
+                "__str__": to_string,
             }
             kernel_globals["concepts"][data['name']] = type(data['name'],(object,), class_attrs)
 # class TRIANGLE:
