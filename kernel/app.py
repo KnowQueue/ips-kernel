@@ -8,6 +8,12 @@ import shutil
 from pathlib import Path
 
 app = Flask(__name__)
+
+Path(os.path.join(APP_KB,"concepts")).mkdir(parents=True, exist_ok=True)
+Path(os.path.join(APP_KB,"hierarchy")).mkdir(parents=True, exist_ok=True)
+Path(os.path.join(APP_KB,"relations")).mkdir(parents=True, exist_ok=True)
+Path(os.path.join(APP_KB,"rules")).mkdir(parents=True, exist_ok=True)
+
 kernel_globals = {
     "concepts": {}
 }
@@ -15,6 +21,7 @@ global_loader(kernel_globals)
 
 @app.route("/")
 def hello():
+    print("Hello, World!")
     return "Hello, World!"
 
 @app.route('/query', methods=['GET'])
@@ -26,7 +33,7 @@ def query():
 
 @app.route("/deploy", methods=['PUT'])
 def deploy():
-    shutil.rmtree(APP_KB)
+    shutil.rmtree(os.path.join(APP_KB,"concepts"))
     for filePath in request.files.keys():
         directoryPath = os.path.dirname(os.path.join(APP_KB, filePath))
         Path(directoryPath).mkdir(parents=True, exist_ok=True)
