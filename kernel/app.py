@@ -34,6 +34,9 @@ def query():
 @app.route("/deploy", methods=['PUT'])
 def deploy():
     shutil.rmtree(os.path.join(APP_KB,"concepts"))
+    shutil.rmtree(os.path.join(APP_KB,"hierarchy"))
+    shutil.rmtree(os.path.join(APP_KB,"relations"))
+    shutil.rmtree(os.path.join(APP_KB,"rules"))
     for filePath in request.files.keys():
         directoryPath = os.path.dirname(os.path.join(APP_KB, filePath))
         Path(directoryPath).mkdir(parents=True, exist_ok=True)
