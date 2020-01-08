@@ -3,6 +3,7 @@ import sys
 from io import StringIO
 import contextlib
 import traceback
+from kernel.functions.list_all import list_all
 
 @contextlib.contextmanager
 def stdoutIO(stdout=None):
@@ -26,6 +27,11 @@ def constructor(cls, *prototype):
         working_mem["instances"][instance_key] = inner_class(prototype, working_mem)
         return working_mem["instances"][instance_key]
 
+def create_function(func, global_mem, local_mem, working_mem):
+    def function_template(*args, **kwargs):
+        return func(global_mem, local_mem, working_mem, *args, **kwargs)
+    return function_template
+
 def request_session(requestBody, kernel_globals):
     working_mem = {
         "constructors": {},
@@ -40,6 +46,8 @@ def request_session(requestBody, kernel_globals):
             "__new__": constructor,
         })
         working_mem["constructors"][data['name']] = locals()[data['name']]
+    
+    locals()["list_all"] = create_function(list_all, kernel_globals, locals(), working_mem)
     
     with stdoutIO() as s:
         try:

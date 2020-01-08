@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
-from .parsers.global_loader import global_loader
-from .parsers.request_session import request_session
+from .loaders.global_loader import global_loader
+from .loaders.request_session import request_session
 from settings import APP_KB
 import os
 import shutil
@@ -26,10 +26,7 @@ def hello():
 
 @app.route('/query', methods=['GET'])
 def query():
-    # import KB
     return request_session(request.get_data(), kernel_globals)
-    # exec(request.get_data())
-    # return result
 
 @app.route("/deploy", methods=['PUT'])
 def deploy():
